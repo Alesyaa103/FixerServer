@@ -12,9 +12,12 @@ module.exports = {
         };
         ctx.body = {
           token: jwt.encode(payload, config.get('jwtSecret')),
+          user,
         };
       } else {
-        console.log(err);
+        ctx.body = {
+          err,
+        };
       }
     })(ctx, next);
   },
@@ -32,7 +35,7 @@ module.exports = {
       });
       if (Find.length !== 0) {
         ctx.body = {
-          msg: 'same person already exist',
+          err: 'Such person already exist',
         };
       } else {
         const newUser = new User({
@@ -42,14 +45,17 @@ module.exports = {
           email,
           password,
         });
-        const res = await User.create(newUser);
+        await User.create(newUser);
         ctx.response.status = 200;
       }
     } catch (err) {
-      throw err;
+      ctx.response.status = 500;
+      ctx.body = {
+        err,
+      };
     }
   },
-  async reset1(ctx, next) {
+  async reset1(ctx) {
     const {
       email,
     } = ctx.request.body;
@@ -58,15 +64,19 @@ module.exports = {
         email,
       });
       if (Find.length === 0) {
-        console.log('there is no such person');
+        ctx.body = {
+          err: "Such person doesn't exist!",
+        };
       } else {
         ctx.response.status = 200;
       }
     } catch (err) {
-      throw err;
+      ctx.body = {
+        err,
+      };
     }
   },
-  async reset2(ctx, next) {
+  async reset2(ctx) {
     const {
       email,
       password,
@@ -75,17 +85,96 @@ module.exports = {
       const Find = await User.find({
         email,
       });
-      console.log(Find);
-      user = Find[0];
+      const user = Find[0];
       user.password = password;
       await user.save();
       ctx.response.status = 200;
     } catch (err) {
-      throw err;
+      ctx.body = {
+        err,
+      };
     }
   },
   async getPersonal(ctx) {
     ctx.body = 'Secret content';
   },
+  async addUser(ctx) {
+    const {
+      firstname,
+      lastname,
+      email,
+      username,
+      password,
+      title,
+      mobile,
+      location,
+      company,
+      stack,
+      price,
+      rating,
+    } = ctx.request.body;
+    try {
+      const Find = await User.find({
+        email,
+      });
+      if (Find.length !== 0) {
+        ctx.body = {
+          err: 'Such person already exist',
+        };
+      } else {
+        const newUser = new User({
+          firstname,
+          lastname,
+          email,
+          username,
+          password,
+          title,
+          mobile,
+          location,
+          company,
+          stack,
+          price,
+          rating,
+        });
+        await User.create(newUser);
+        ctx.response.status = 200;
+      }
+    } catch (err) {
+      ctx.response.status = 500;
+      ctx.body = {
+        err,
+      };
+    }
+  },
+  async returnWorkers(ctx) {
+    const workers = await User.find();
+    try {
+      ctx.body = {
+        workers,
+      };
+      ctx.response.status = 200;
+    } catch (err) {
+      ctx.body = {
+        err,
+      };
+    }
+  },
+  async updateUser(ctx) {
+    console.log(ctx.request.body)
+    const user = ctx.request.body;
+    try {
+      console.log(user);
+      let userUpdate = await User.findById(user._id);
+      userUpdate = user;
+      await userUpdate.save();
+      ctx.response.status = 200;
+      ctx.body = {
+        user
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  
 
 };

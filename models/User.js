@@ -1,33 +1,68 @@
 const mongoose = require('mongoose');
 const config = require('config');
 const crypto = require('crypto');
-// const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 const User = mongoose.Schema;
 const UserSchema = new User({
-  firstname: String,
-  lastname: String,
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
-    // unique: 'Two users cannot share the same username ({VALUE})',
-    required: 'add username',
+    required: true,
   },
   email: {
     type: String,
-    // unique: 'Two users cannot share the same email ({VALUE})',
-    required: 'add e-mail',
+    required: true,
     validate: {
       validator: function checkEmail(value) {
         const re = /^(\S+)@([a-z0-9-]+)(\.)([a-z]{2,4})(\.?)([a-z]{0,4})+$/;
         return re.test(value);
       },
-      message: props => `${props.value} is not a valid email.`,
+      err: props => `${props.value} is not a valid email.`,
     },
   },
   photo: {
     type: String,
     default: config.get('defaultUserPhoto'),
   },
+  title: {
+    type: String,
+  },
+  mobile: {
+    code: {
+      type: Number,
+    },
+    number: {
+      type: Number,
+    }
+  },
+  location: {
+    country: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+  },
+  company: {
+    type: String,
+  },
+  stack: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  rating: {
+    type: Number,
+  },
+  isAdmin: false,
   token: String,
   passwordHash: String,
   salt: String,

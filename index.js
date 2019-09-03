@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
-// const serve = require('koa-static');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');

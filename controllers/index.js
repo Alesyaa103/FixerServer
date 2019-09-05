@@ -97,8 +97,8 @@ module.exports = {
   },
   
   async returnWorkers(ctx) {
-    const workers = await User.find();
     try {
+      const workers = await User.find();
       ctx.body = {
         workers,
       };
@@ -111,8 +111,8 @@ module.exports = {
   },
   async returnUser(ctx) {
     const data = ctx.request.body;
-    const user = await User.findOne({ _id: data._id });
     try {
+      const user = await User.findOne({ _id: data._id });
       ctx.body = {
         user,
       };

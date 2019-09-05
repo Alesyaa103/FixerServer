@@ -95,57 +95,7 @@ module.exports = {
       };
     }
   },
-  async getPersonal(ctx) {
-    ctx.body = 'Secret content';
-  },
-  // async addUser(ctx) {
-  //   const {
-  //     firstname,
-  //     lastname,
-  //     email,
-  //     username,
-  //     password,
-  //     title,
-  //     mobile,
-  //     location,
-  //     company,
-  //     stack,
-  //     price,
-  //     rating,
-  //   } = ctx.request.body;
-  //   try {
-  //     const Find = await User.find({
-  //       email,
-  //     });
-  //     if (Find.length !== 0) {
-  //       ctx.body = {
-  //         err: 'Such person already exist',
-  //       };
-  //     } else {
-  //       const newUser = new User({
-  //         firstname,
-  //         lastname,
-  //         email,
-  //         username,
-  //         password,
-  //         title,
-  //         mobile,
-  //         location,
-  //         company,
-  //         stack,
-  //         price,
-  //         rating,
-  //       });
-  //       await User.create(newUser);
-  //       ctx.response.status = 200;
-  //     }
-  //   } catch (err) {
-  //     ctx.response.status = 500;
-  //     ctx.body = {
-  //       err,
-  //     };
-  //   }
-  // },
+  
   async returnWorkers(ctx) {
     const workers = await User.find();
     try {
@@ -153,6 +103,19 @@ module.exports = {
         workers,
       };
       ctx.response.status = 200;
+    } catch (err) {
+      ctx.body = {
+        err,
+      };
+    }
+  },
+  async returnUser(ctx) {
+    const data = ctx.request.body;
+    const user = await User.findOne({ _id: data._id });
+    try {
+      ctx.body = {
+        user,
+      };
     } catch (err) {
       ctx.body = {
         err,

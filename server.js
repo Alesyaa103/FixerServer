@@ -40,9 +40,5 @@ router.use('/api/', routes);
 app.use(router.routes())
   .use(router.allowedMethods());
 
-
 const PORT = process.env.PORT || 7070;
-app.listen(PORT, (error) => {
-  if (error) console.log('error');
-  else console.log(`server on port ${PORT}`);
-});
+app.listen(PORT);

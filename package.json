@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.524.0",
     "config": "^3.2.2",
     "crypto": "^1.0.1",
     "jwt-simple": "^0.5.6",

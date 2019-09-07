@@ -2,6 +2,7 @@ const passport = require('koa-passport');
 const config = require('config');
 const jwt = require('jwt-simple'); // аутентификация по JWT для hhtp
 const User = require('../models/User');
+const uploadS3 = require('../utils/uploadS3');
 
 module.exports = {
   async signIn(ctx, next) {
@@ -12,7 +13,9 @@ module.exports = {
         };
         ctx.body = {
           token: jwt.encode(payload, config.get('jwtSecret')),
-          user,
+          user: {
+            email: user.email,
+          },
         };
       } else {
         ctx.body = {
@@ -95,57 +98,48 @@ module.exports = {
       };
     }
   },
-  
   async returnWorkers(ctx) {
     try {
       const workers = await User.find();
+      //const workers = payload.sort(dynamicSortMultiple.apply(null, User.rating));
       ctx.body = {
         workers,
       };
       ctx.response.status = 200;
     } catch (err) {
-      ctx.body = {
-        err,
-      };
-    }
-  },
-  async returnUser(ctx) {
-    const data = ctx.request.body;
-    try {
-      const user = await User.findOne({ _id: data._id });
-      ctx.body = {
-        user,
-      };
-    } catch (err) {
-      ctx.body = {
-        err,
-      };
+        console.log(err);
     }
   },
   async updateUser(ctx) {
     const data = ctx.request.body;
     try {
-      const userUpdate = await User.findById(data._id);
-      userUpdate.firstname = data.firstname;
-      userUpdate.lastname = data.lastname;
-      userUpdate.email = data.email;
-      userUpdate.username = data.username;
-      userUpdate.title = data.title;
-      userUpdate.location.country = data.location.country;
-      userUpdate.location.city = data.location.city;
-      userUpdate.company = data.company;
-      userUpdate.stack = data.stack;
-      userUpdate.price = data.price;
-      userUpdate.rating = data.rating;
-      userUpdate.mobile.code = data.mobile.code;
-      userUpdate.mobile.number = data.mobile.number;
-      await userUpdate.save();
+      const user = await User.findByIdAndUpdate(data._id);
       ctx.response.status = 200;
       ctx.body = {
-        userUpdate,
-      }
+        user: {
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          username: user.username,
+          title: user.title,
+          location: {
+            country: user.location.country,
+            city: user.location.city,
+          },
+          company: user.company,
+          stack: user.stack,
+          price: user.price,
+          rating: user.rating,
+          mobile: {
+            code: user.mobile.code,
+            number: user.mobile.number,
+          },
+        },
+      };
     } catch (err) {
-      console.log(err);
+      ctx.body = {
+        err,
+      }
     }
   },
   async deleteUser(ctx) {
@@ -161,5 +155,47 @@ module.exports = {
       };
     }
   },
-
+  async user(ctx) {
+    const data = ctx.request.body;
+    try {
+      const user = await User.findOne({ email: data.email });
+      ctx.body = {
+        user: {
+          firstname: user.firstname,
+          photo: user.photo,
+          lastname: user.lastname,
+          email: user.email,
+          username: user.username,
+          title: user.title,
+          location: {
+            country: user.location.country,
+            city: user.location.city,
+          },
+          company: user.company,
+          stack: user.stack,
+          price: user.price,
+          rating: user.rating,
+          mobile: {
+            code: user.mobile.code,
+            number: user.mobile.number,
+          },
+        },
+      };
+      ctx.response.status = 200;
+    } catch (err) {
+      ctx.body = {
+        err,
+      };
+    }
+  },
+  async userPhoto(ctx) {
+    
+    console.log(ctx.request.files);
+    // const photo = await uploadS3(config.get('aws').userPhoto, ctx.request.files.photo)
+    // console.log(photo);
+    ctx.response.status = 200;
+    ctx.body = {
+      sraka: ctx.request.files,
+    }
+  }
 };

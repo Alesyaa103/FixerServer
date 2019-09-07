@@ -40,7 +40,7 @@ const UserSchema = new User({
     },
     number: {
       type: Number,
-    }
+    },
   },
   location: {
     country: {

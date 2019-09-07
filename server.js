@@ -33,9 +33,9 @@ app.use(bodyParser());
 
 app.use(passport.initialize());
 
-const auth = require('./routes/auth').routes();
+const routes = require('./routes').routes();
 
-router.use('/api/', auth);
+router.use('/api/', routes);
 app.use(router.routes())
   .use(router.allowedMethods());
 

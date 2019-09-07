@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "eslint": "eslint  ./config/*.js ./controllers/*.js ./models/*.js ./routes/*.js index.js",
-    "eslint:fix": "eslint  ./config/*.js ./controllers/*.js ./models/*.js ./routes/*.js index.js --fix"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "eslint": "eslint  ./config/*.js ./controllers/*.js ./models/*.js routes.js server.js",
+    "eslint:fix": "eslint  ./config/*.js ./controllers/*.js ./models/*.js routes.js server.js --fix"
   },
   "keywords": [],
   "author": "",

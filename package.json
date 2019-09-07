@@ -26,8 +26,7 @@
     "mongoose": "^5.6.6",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "validator": "^11.1.0",
-    "vue2-google-maps": "^0.10.7"
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

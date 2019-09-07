@@ -1,4 +1,3 @@
-require('dotenv').config();
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const logger = require('koa-logger');
@@ -17,18 +16,6 @@ app.use(cors({
   },
 }));
 
-app.use(async (ctx, next) => {
-  try {
-    console.log('Request', ctx.request);
-    await next();
-  } catch (err) {
-    console.log('Global error: ', err);
-    ctx.status = 500;
-    ctx.body = {
-      error: true,
-    };
-  }
-});
 app.use(logger());
 app.use(bodyParser());
 

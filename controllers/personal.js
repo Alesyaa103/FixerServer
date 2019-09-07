@@ -4,64 +4,64 @@ const uploadS3 = require('../utils/uploadS3');
 
 module.exports = {
   async returnSortedWorkers(ctx) {
-      const {param} = ctx.query;
-      if (param !== "by price" || param !== "by rating") {
-        ctx.response.status = 404;
+    const { param } = ctx.query;
+    if (param !== 'by price' || param !== 'by rating') {
+      ctx.response.status = 404;
+      ctx.body = {
+        error: 'Only price and rating params are available',
+      };
+    }
+    try {
+      if (param === 'by price') {
+        const price = await User.find().sort({ price: 1 });
+        ctx.response.status = 200;
         ctx.body = {
-          error: "Only price and rating params are available"
-        }
+          workers: price,
+        };
       }
-      try {
-        if (param === 'by price') {
-          const price = await User.find().sort({price: 1});
-          ctx.response.status = 200;
-          ctx.body = {
-            workers: price
-          }
-        }
-        if (param === "by rating") {
-          const rating = await User.find().sort({rating: -1});
-          ctx.response.status = 200;
-          ctx.body = {
-            workers: rating
-          }
-        }
-      } catch (err) {
-        console.log(err)
+      if (param === 'by rating') {
+        const rating = await User.find().sort({ rating: -1 });
+        ctx.response.status = 200;
+        ctx.body = {
+          workers: rating,
+        };
       }
-    },
+    } catch (err) {
+      ctx.body = {
+        err,
+      };
+    }
+  },
   async updateUser(ctx) {
     const data = ctx.request.body;
     try {
       const user = await User.findByIdAndUpdate(ctx.state.user._id, data);
-      console.log(user);
       ctx.body = {
         user: {
-          firstname: data.firstname,
-          lastname: data.lastname,
-          email: data.email,
-          username: data.username,
-          title: data.title,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          username: user.username,
+          title: user.title,
           location: {
-            country: data.location.country,
-            city: data.location.city,
+            country: user.location.country,
+            city: user.location.city,
           },
-          company: data.company,
-          stack: data.stack,
-          price: data.price,
-          rating: data.rating,
+          company: user.company,
+          stack: user.stack,
+          price: user.price,
+          rating: user.rating,
           mobile: {
-            code: data.mobile.code,
-            number: data.mobile.number,
+            code: user.mobile.code,
+            number: user.mobile.number,
           },
         },
       };
       ctx.response.status = 200;
     } catch (err) {
-      // ctx.body = {
-      //   err,
-      // }
-      console.log(err);
+      ctx.body = {
+        err,
+      };
     }
   },
   async deleteUser(ctx) {
@@ -108,17 +108,16 @@ module.exports = {
   },
   async updatePhoto(ctx) {
     try {
-      console.log(ctx.request.files);
-      const photo = await uploadS3(config.get('aws').userPhoto, ctx.request.files.photo)
-      await User.findByIdAndUpdate(ctx.state.user._id, {photo: photo})
+      const photo = await uploadS3(config.get('aws').userPhoto, ctx.request.files.photo);
+      await User.findByIdAndUpdate(ctx.state.user._id, { photo });
       ctx.response.status = 200;
       ctx.body = {
         photo,
-      }
-    } catch(err) {
+      };
+    } catch (err) {
       ctx.body = {
         err,
-      }
+      };
     }
-  }
+  },
 };

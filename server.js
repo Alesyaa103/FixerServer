@@ -22,7 +22,7 @@ app.use(bodyParser());
 app.use(passport.initialize());
 
 const routes = require('./routes').routes();
-router.use('/api', routes);
+router.use('/api/', routes);
 app.use(router.routes())
   .use(router.allowedMethods());
 

@@ -4,6 +4,9 @@ const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
 const passport = require('./libs/passport/index');
+const serve = require('koa-static');
+const koaSwagger = require('koa2-swagger-ui');
+
 require('./libs/mongoose');
 
 passport.initialize();
@@ -16,10 +19,21 @@ app.use(cors({
   },
 }));
 
+app.use(serve('docs'))
 app.use(logger());
 app.use(bodyParser());
 
 app.use(passport.initialize());
+
+app.use(
+  koaSwagger({
+    routePrefix: '/docs',
+    hideTopbar: true,
+    swaggerOptions: {
+      url: 'http://localhost:7070/docs.yml',
+    },
+  }),
+);
 
 const routes = require('./routes').routes();
 router.use('/api', routes);

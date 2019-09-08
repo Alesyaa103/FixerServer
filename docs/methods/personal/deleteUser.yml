@@ -1,0 +1,26 @@
+delete:
+  summary: Delete User
+  tags:
+    - Personal
+  security:
+    - ApiKeyAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+  responses:
+    "200":
+      description: User successfully deleted
+    "500":
+      content:
+        application/json:
+          description: Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                err: string

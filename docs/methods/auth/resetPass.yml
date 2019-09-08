@@ -1,0 +1,28 @@
+post:
+  summary: Reset Password
+  description: Reset Password
+  tags:
+    - Authorization
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              description: User don't write email on the reset password view
+            password:
+              type: string
+  responses:
+    "200":
+      description: Success reset password
+    "500":
+      content:
+        application/json:
+          description: Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                err: string

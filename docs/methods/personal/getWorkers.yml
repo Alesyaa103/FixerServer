@@ -1,0 +1,32 @@
+get:
+  summary: Return sorted workers by price 
+  tags:
+    - Personal
+  security:
+    - ApiKeyAuth: []
+  responses:
+    "200":
+      content:
+        application/json:
+          description: return workers's information
+          schema:
+            type: object
+            properties:
+              workers: array
+    "404":
+      content:
+        application/json:
+          description: query is invalid
+          schema:
+            type: object
+            properties:
+              error: string
+    "500":
+      content:
+        application/json:
+          description: Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                err: string

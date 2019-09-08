@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  title: My Fixer API documentation
+  description: Alesya Afanaseva
+  version: 1.0.0
+  host: localhost:7070
+tags:
+  - name: Authorization
+  - name: Personal
+paths:
+  /sign-in:
+    $ref: methods/auth/signin.yml
+  /sign-up:
+    $ref: methods/auth/signup.yml
+  /check-email:
+    $ref: methods/auth/checkEmail.yml
+  /reset-pass:
+    $ref: methods/auth/resetPass.yml
+  /:
+    $ref: methods/personal/getUser.yml
+  /update-user:
+    $ref: methods/personal/updateUser.yml
+  /remove-user:
+    $ref: methods/personal/deleteUser.yml
+  /workers?param=by price:
+    $ref: methods/personal/getWorkers.yml
+servers:
+  - url: /api
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

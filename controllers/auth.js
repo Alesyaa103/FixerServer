@@ -12,14 +12,13 @@ module.exports = {
         };
         ctx.body = {
           token: jwt.encode(payload, config.get('jwtSecret')),
-          user: {
-            email: user.email,
-          },
         };
+        ctx.response.status = 200;
       } else {
         ctx.body = {
           err,
         };
+        ctx.response.status = 404;
       }
     })(ctx, next);
   },
@@ -36,6 +35,7 @@ module.exports = {
         email,
       });
       if (Find.length !== 0) {
+        ctx.response.status = 400;
         ctx.body = {
           err: 'Such person already exist',
         };
@@ -66,11 +66,15 @@ module.exports = {
         email,
       });
       if (Find.length === 0) {
+        ctx.response.status = 400;
         ctx.body = {
           err: "Such person doesn't exist!",
         };
       } else {
         ctx.response.status = 200;
+        ctx.body = {
+          email,
+        }
       }
     } catch (err) {
       ctx.body = {
@@ -92,8 +96,9 @@ module.exports = {
       await user.save();
       ctx.response.status = 200;
     } catch (err) {
+      ctx.response.status = 500;
       ctx.body = {
-        err,
+        err: 'server error',
       };
     }
   },

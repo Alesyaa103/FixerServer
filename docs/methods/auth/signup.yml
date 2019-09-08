@@ -1,0 +1,44 @@
+post:
+  summary: Registration
+  description: User registration
+  tags:
+    - Authorization
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            firstname:
+              type: string
+            username:
+              type: string
+            lastname:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+            
+  responses:
+    "200":
+        description: Redirect to Log in
+    "400":
+      content:
+        application/json:
+          description: Such person already exist
+          schema:
+            type: object
+            properties:
+              error:
+                err: string
+                description: Such person already exist
+    "500":
+      content:
+        application/json:
+          description: Mistake in user fields
+          schema:
+            type: object
+            properties:
+              err:
+                errors: object

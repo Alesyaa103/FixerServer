@@ -59,6 +59,7 @@ module.exports = {
       };
       ctx.response.status = 200;
     } catch (err) {
+      ctx.response.status = 500;
       ctx.body = {
         err,
       };
@@ -66,9 +67,12 @@ module.exports = {
   },
   async deleteUser(ctx) {
     try {
-      await User.findByIdAndDelete(ctx.state.user._id);
+      const data = ctx.request.body;
+      const Find = await User.findOne({email: data.email});
+      await User.findByIdAndDelete(Find._id);
       ctx.response.status = 200;
     } catch (err) {
+      ctx.response.status = 500;
       ctx.body = {
         err,
       };
@@ -101,8 +105,9 @@ module.exports = {
       };
       ctx.response.status = 200;
     } catch (err) {
+      ctx.response.status = 500;
       ctx.body = {
-        err,
+        err: 'server error',
       };
     }
   },

@@ -1,0 +1,90 @@
+put:
+  summary: Update User Information
+  tags:
+    - Personal
+  security:
+    - ApiKeyAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            firstname:
+              type: string
+            photo:
+              type: string
+            lastname:
+              type: string
+            email:
+              type: string
+            username:
+              type: string
+            title:
+              type: string
+            location:
+              type: object
+              properties:
+                country: string,
+                city: string
+            company:
+              type: string
+            stack: 
+              type: string
+            price: 
+              type: string
+            rating: 
+              type: string
+            mobile: 
+              type: object
+              properties:
+                code: string
+                number: string
+  responses:
+    "200":
+      content:
+        application/json:
+          description: return updated User information
+          schema:
+            type: object
+            properties:
+              firstname:
+                type: string
+              photo:
+                type: string
+              lastname:
+                type: string
+              email:
+                type: string
+              username:
+                type: string
+              title:
+                type: string
+              location:
+                type: object
+                properties:
+                  country: string,
+                  city: string
+              company:
+                type: string
+              stack: 
+                type: string
+              price: 
+                type: string
+              rating: 
+                type: string
+              mobile: 
+                type: object
+                properties:
+                  code: string
+                  number: string
+    "500":
+      content:
+        application/json:
+          description: Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                err: string
+

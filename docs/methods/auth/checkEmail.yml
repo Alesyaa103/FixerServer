@@ -1,0 +1,34 @@
+post:
+  summary: Registration
+  description: Check user email
+  tags:
+    - Authorization
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            
+  responses:
+    "200":
+      content:
+        application/json:
+          description: Redirect to Reset Password
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+    "400":
+      content:
+        application/json:
+          description: Such person doesn't exist!
+          schema:
+            type: object
+            properties:
+              error:
+                err: string
+                description: Such person doesn't exist!

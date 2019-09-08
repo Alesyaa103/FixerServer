@@ -10,7 +10,7 @@ const {
 
 const router = new KoaRouter();
 
-router.post('sign-in', signIn);
+router.post('', signIn);
 router.post('sign-up', signUp);
 router.post('check-email', checkEmail);
 router.post('reset-pass', resetPass);

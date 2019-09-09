@@ -3,7 +3,7 @@ info:
   title: My Fixer API documentation
   description: Alesya Afanaseva
   version: 1.0.0
-  host: localhost:7070
+  host: http://52.28.24.7
 tags:
   - name: Authorization
   - name: Personal

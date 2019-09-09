@@ -1,1 +1,1 @@
-https://server-fixer.herokuapp.com/
+http://52.28.24.7/

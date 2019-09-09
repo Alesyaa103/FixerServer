@@ -30,7 +30,7 @@ app.use(
     routePrefix: '/docs',
     hideTopbar: true,
     swaggerOptions: {
-      url: 'http://localhost:7070/docs.yml',
+      url: 'http://52.28.24.7/docs.yml',
     },
   }),
 );

@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const logger = require('koa-logger');
-const bodyParser = require('koa-bodyparser');
+const bodyParser = require('koa-body');
 const cors = require('koa2-cors');
 const passport = require('./libs/passport/index');
 const serve = require('koa-static');
@@ -21,7 +21,9 @@ app.use(cors({
 
 app.use(serve('docs'))
 app.use(logger());
-app.use(bodyParser());
+app.use(bodyParser({
+  multipart: true
+}));
 
 app.use(passport.initialize());
 

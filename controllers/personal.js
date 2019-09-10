@@ -70,10 +70,9 @@ module.exports = {
     }
   },
   async deleteUser(ctx) {
+    const id = ctx.params.id;
     try {
-      const data = ctx.request.body;
-      const Find = await User.findOne({email: data.email});
-      await User.findByIdAndDelete(Find._id);
+      await User.findByIdAndDelete(id);
       ctx.response.status = 200;
     } catch (err) {
       ctx.response.status = 500;

@@ -11,61 +11,28 @@ module.exports = {
         error: 'Only price and rating params are available',
       };
     }
+    const rating = await User.find().sort({ rating: -1 });
+    console.log(rating);
     try {
       if (param === 'by price') {
         const price = await User.find().sort({ price: 1 });
         ctx.response.status = 200;
         ctx.body = {
-          workers: {
-            firstname: price.firstname,
-            lastname: price.lastname,
-            email: price.email,
-            username: price.username,
-            title: price.title,
-            location: {
-              country: price.location.country,
-              city: price.location.city,
-            },
-            company: price.company,
-            stack: price.stack,
-            price: price.price,
-            rating: price.rating,
-            mobile: {
-              code: price.mobile.code,
-              number: price.mobile.number,
-            },
-          },
+          workers: price,
         };
       }
       if (param === 'by rating') {
         const rating = await User.find().sort({ rating: -1 });
         ctx.response.status = 200;
         ctx.body = {
-          workers: {
-            firstname: rating.firstname,
-            lastname: rating.lastname,
-            email: rating.email,
-            username: rating.username,
-            title: rating.title,
-            location: {
-              country: rating.location.country,
-              city: rating.location.city,
-            },
-            company: rating.company,
-            stack: rating.stack,
-            price: rating.price,
-            rating: rating.rating,
-            mobile: {
-              code: rating.mobile.code,
-              number: rating.mobile.number,
-            },
-          },
+          workers: rating,
         };
       }
     } catch (err) {
       ctx.body = {
         err,
       };
+      console.log(err);
     }
   },
   async updateUser(ctx) {

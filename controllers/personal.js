@@ -91,6 +91,7 @@ module.exports = {
             code: user.mobile.code,
             number: user.mobile.number,
           },
+          isAdmin: user.isAdmin,
         },
       };
       ctx.response.status = 200;
@@ -137,6 +138,7 @@ module.exports = {
             code: user.mobile.code,
             number: user.mobile.number,
           },
+          isAdmin: user.isAdmin,
         },
       };
       ctx.response.status = 200;

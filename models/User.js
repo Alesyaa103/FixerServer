@@ -62,7 +62,10 @@ const UserSchema = new User({
   rating: {
     type: Number,
   },
-  isAdmin: false,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   token: String,
   passwordHash: String,
   salt: String,

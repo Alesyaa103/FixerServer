@@ -16,7 +16,7 @@ router.post('/check-email', checkEmail);
 router.post('/reset-pass', resetPass);
 router.get('/', passport.authenticate('jwt', { session: false }), returnUser);
 router.get('/workers', passport.authenticate('jwt', { session: false }), returnSortedWorkers);
-router.post('/remove:id',  deleteUser);
+router.delete('/remove:id',  deleteUser);
 router.put('/update-user', passport.authenticate('jwt', { session: false }), updateUser);
 router.put('/photo', passport.authenticate('jwt', { session: false }), updatePhoto);
 

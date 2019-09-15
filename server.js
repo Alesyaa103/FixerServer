@@ -22,7 +22,8 @@ app.use(cors({
 app.use(serve('docs'))
 app.use(logger());
 app.use(bodyParser({
-  multipart: true
+  multipart: true,
+  formLimit: 80,
 }));
 
 app.use(passport.initialize());

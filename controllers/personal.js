@@ -127,6 +127,7 @@ module.exports = {
       ctx.body = {
         err,
       };
+      console.log(err)
     }
   },
 };

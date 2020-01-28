@@ -18,7 +18,6 @@ app.use(cors({
     return '*';
   },
 }));
-
 app.use(serve('docs'))
 app.use(logger());
 app.use(bodyParser({
